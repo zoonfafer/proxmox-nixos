@@ -1,11 +1,10 @@
-{
-  lib,
-  python3,
-  pkgs, 
-  pkgsCross,
-  stdenv, 
-  fetchgit,
-  ... 
+{ lib
+, python3
+, pkgs
+, pkgsCross
+, stdenv
+, fetchgit
+, ...
 }:
 
 stdenv.mkDerivation rec {
@@ -13,9 +12,9 @@ stdenv.mkDerivation rec {
   version = "4.2023.08-4";
 
   src = fetchgit {
-    url = "git://git.proxmox.com/git/${pname}.git";
-    rev = "17443032f78eaf9ae276f8df9d10c64beec2e048";
-    sha256 = "sha256-19frOpnL8xLWIDw58u1zcICU9Qefp936LteyfnSIMCw=";
+    url = "https://github.com/zoonfafer/${pname}.git";
+    rev = "a4fd06bb39a9cb1ce357bf933b9b4df6feb5b45a";
+    sha256 = "sha256-00000000000000000000000000000000000000000000";
     fetchSubmodules = true;
   };
 
@@ -24,16 +23,25 @@ stdenv.mkDerivation rec {
   hardeningDisable = [ "format" "fortify" "trivialautovarinit" ];
 
   nativeBuildInputs = with pkgs; [
-    dpkg fakeroot qemu
-    bc dosfstools acpica-tools mtools nasm libuuid
-    qemu-utils libisoburn python3
+    dpkg
+    fakeroot
+    qemu
+    bc
+    dosfstools
+    acpica-tools
+    mtools
+    nasm
+    libuuid
+    qemu-utils
+    libisoburn
+    python3
   ] ++ (lib.optional (stdenv.hostPlatform.system != "aarch64-linux") pkgsCross.aarch64-multiplatform.stdenv.cc)
-    ++ (lib.optional (stdenv.hostPlatform.system != "x86_64-linux") pkgsCross.gnu64.stdenv.cc)
-    ++ (lib.optional (stdenv.hostPlatform.system != "riscv64-linux") pkgsCross.riscv64.stdenv.cc);
+  ++ (lib.optional (stdenv.hostPlatform.system != "x86_64-linux") pkgsCross.gnu64.stdenv.cc)
+  ++ (lib.optional (stdenv.hostPlatform.system != "riscv64-linux") pkgsCross.riscv64.stdenv.cc);
 
   depsBuildBuild = [ stdenv.cc ];
 
-  postPatch = 
+  postPatch =
     let
       pythonPath = python3.pkgs.makePythonPath (with python3.pkgs; [ pexpect ]);
     in
@@ -58,7 +66,7 @@ stdenv.mkDerivation rec {
       sed -i '/^EDK2_TOOLCHAIN *=/a export $(EDK2_TOOLCHAIN)_BIN=${pkgsCross.gnu64.stdenv.cc.targetPrefix}' ./debian/rules
     '';
 
-  buildPhase = 
+  buildPhase =
     let
       mainVersion = builtins.head (lib.splitString "-" version);
     in
@@ -106,4 +114,4 @@ stdenv.mkDerivation rec {
     homepage = "git://git.proxmox.com/git/${pname}.git";
     maintainers = with lib.maintainers; [ ];
   };
- }
+}
