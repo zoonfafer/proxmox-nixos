@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
   version = "4.2023.08-4";
 
   src = fetchgit {
-    url = "git://git.proxmox.com/git/${pname}.git";
-    rev = "17443032f78eaf9ae276f8df9d10c64beec2e048";
-    sha256 = "sha256-19frOpnL8xLWIDw58u1zcICU9Qefp936LteyfnSIMCw=";
+    url = "https://github.com/zoonfafer/${pname}.git";
+    rev = "a4fd06bb39a9cb1ce357bf933b9b4df6feb5b45a";
+    sha256 = "sha256-snd4JOD8QpSRvYD3/qy1URKh3YVRxJ0V/GlgWfB0u2k=";
     fetchSubmodules = true;
   };
 
