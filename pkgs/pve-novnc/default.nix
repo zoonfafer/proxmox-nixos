@@ -7,10 +7,15 @@
 novnc.overrideAttrs (old: rec {
   src_patches = fetchgit {
     url = "git://git.proxmox.com/git/novnc-pve.git";
-    rev = "2de2bef9737032c14edf0862261e34da74adb76d";
+
+    # rev = "2de2bef9737032c14edf0862261e34da74adb76d";
+    # hash = "sha256-5pybuOkvNVcP+In03ZokNpqgmGwB4DQEO4jmefV7W9Y=";
+
+    # rev = "unknown";
     # hash = "sha256-BQm4hDC7b+YaFipVonzcwVG/4JswkMSFZEpVkCdfrjM=";
-    # ref = "unknown";
-    hash = "sha256-5pybuOkvNVcP+In03ZokNpqgmGwB4DQEO4jmefV7W9Y=";
+
+    rev = "e410ca0eea1d2ab9d3bf93db8e5e1c44cd8229fb";
+    hash = "sha256-BQm4hDC7b+YaFipVonzcwVG/4JswkMSFZEpVkCdfrjM=";
   };
 
   patches =
